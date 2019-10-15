@@ -10,7 +10,7 @@ class CategoryMealsScreen extends StatelessWidget {
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, String>;
     final categoryId = routeArgs['id'];
-    final categoryTitle = routeArgs['categoryTitle'];
+    final categoryTitle = routeArgs['title'];
     final categoryMeals = DUMMY_MEALS.where((meal) {
       return meal.categories.contains(categoryId);
     }).toList();
@@ -19,9 +19,12 @@ class CategoryMealsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(categoryTitle),
       ),
-      body: ListView.builder(itemBuilder: (ctx, index) {
+      body: ListView.builder(
+        itemCount: categoryMeals.length,
+        itemBuilder: (ctx, index) {
         final meal = categoryMeals[index];
         return MealItem(
+          id: meal.id,
           title: meal.title,
           affordability: meal.affordability,
           imageUrl: meal.imageUrl,
